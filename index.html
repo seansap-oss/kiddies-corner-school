@@ -1,12 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kiddies Corner School</title>
-    <script type="module" src="/src/main.jsx"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiddies Corner School</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:Arial, sans-serif; color:#1f2937; background:#fffaf0; line-height:1.6; }
+    header { background:rgba(255,255,255,.96); border-bottom:1px solid #fde68a; position:sticky; top:0; z-index:10; }
+    .topbar { max-width:1200px; margin:auto; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .logo { width:48px; height:48px; border-radius:16px; background:linear-gradient(135deg,#fde047,#bae6fd,#bbf7d0); display:flex; align-items:center; justify-content:center; font-weight:900; color:#334155; flex-shrink:0; }
+    .brand h1 { font-size:28px; line-height:1.1; color:#1e293b; }
+    .brand p { color:#64748b; font-size:14px; }
+    .header-actions { display:flex; gap:12px; align-items:center; flex-shrink:0; }
+    .phone { background:#eff6ff; color:#075985; padding:10px 14px; border-radius:999px; text-decoration:none; font-weight:700; font-size:14px; }
+    .btn { display:inline-block; background:#facc15; color:#111827; padding:12px 20px; border-radius:999px; text-decoration:none; font-weight:800; box-shadow:0 6px 20px rgba(0,0,0,.12); }
+    nav { background:#dbeafe; border-top:1px solid #bfdbfe; overflow-x:auto; }
+    nav ul { max-width:1200px; margin:auto; list-style:none; display:flex; justify-content:center; gap:8px; padding:10px 20px; min-width:max-content; }
+    nav a { text-decoration:none; color:#334155; font-weight:800; padding:9px 16px; border-radius:999px; display:block; white-space:nowrap; }
+    nav a:hover { background:white; color:#0369a1; }
+    .hero { min-height:82vh; background:linear-gradient(90deg,rgba(2,6,23,.78),rgba(15,23,42,.48),rgba(15,23,42,.18)),url('public/school-campus.jpg'); background-size:cover; background-position:center; display:flex; align-items:center; }
+    .hero-content { max-width:1200px; width:100%; margin:auto; padding:80px 20px; color:white; }
+    .badge { display:inline-block; background:rgba(255,255,255,.92); color:#047857; padding:8px 14px; border-radius:999px; font-weight:800; font-size:14px; margin-bottom:20px; }
+    .hero h2 { font-size:clamp(36px,7vw,76px); line-height:1.05; max-width:780px; margin-bottom:24px; }
+    .hero p { font-size:clamp(16px,2vw,22px); max-width:660px; color:rgba(255,255,255,.92); margin-bottom:30px; }
+    .hero-buttons { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-blue { background:#0ea5e9; color:white; }
+    .btn-ghost { background:rgba(255,255,255,.16); color:white; border:1px solid rgba(255,255,255,.32); box-shadow:none; }
+    section { padding:64px 20px; }
+    .container { max-width:1200px; margin:auto; }
+    .section-title { text-align:center; max-width:780px; margin:0 auto 40px; }
+    .section-title h3 { font-size:clamp(30px,4vw,44px); color:#0f172a; margin-bottom:10px; }
+    .section-title p { color:#64748b; font-size:18px; }
+    .about-box { background:#fffaf0; border:1px solid #fde68a; border-radius:28px; padding:32px; box-shadow:0 8px 30px rgba(0,0,0,.05); display:grid; grid-template-columns:1.4fr .8fr; gap:32px; margin-bottom:36px; }
+    .about-text p { margin-bottom:16px; color:#475569; font-size:17px; }
+    .highlight-card { background:white; border:1px solid #bfdbfe; border-radius:24px; padding:24px; }
+    .highlight-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+    .highlight { background:#eff6ff; border-radius:18px; padding:16px; text-align:center; }
+    .highlight strong { display:block; font-size:24px; color:#0369a1; }
+    .highlight span { color:#64748b; font-weight:700; font-size:14px; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .feature,.program { background:white; border:1px solid #bae6fd; border-radius:28px; padding:28px; box-shadow:0 8px 25px rgba(0,0,0,.04); }
+    .icon { width:58px; height:58px; background:#dbeafe; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:18px; }
+    .feature h4,.program h4 { font-size:22px; margin-bottom:10px; color:#0f172a; }
+    .feature p,.program p { color:#64748b; }
+    .programs { background:linear-gradient(#ffffff,#eff6ff); }
+    .program-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+    .program a { margin-top:18px; display:inline-block; color:#0284c7; font-weight:800; text-decoration:none; }
+    .cta { background:white; }
+    .cta-box { background:linear-gradient(90deg,#fef08a,#dbeafe,#bbf7d0); border-radius:32px; padding:40px; display:flex; justify-content:space-between; align-items:center; gap:24px; }
+    .cta-box h3 { font-size:34px; color:#0f172a; }
+    .cta-box p { color:#475569; font-size:18px; margin-top:8px; }
+    footer { background:#0f172a; color:white; padding:44px 20px; }
+    .footer-grid { max-width:1200px; margin:auto; display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px; }
+    footer p { color:#cbd5e1; margin-top:8px; }
+    .footer-right { text-align:right; }
+    @media (max-width:800px) {
+      .topbar { align-items:flex-start; }
+      .brand h1 { font-size:20px; }
+      .phone { display:none; }
+      .btn { padding:10px 14px; font-size:13px; }
+      .hero { min-height:calc(100vh - 120px); background:linear-gradient(180deg,rgba(2,6,23,.82),rgba(15,23,42,.55),rgba(15,23,42,.35)),url('public/school-campus.jpg'); background-size:cover; background-position:center; }
+      .hero-content { padding:56px 18px; }
+      .about-box,.features,.program-grid,.footer-grid { grid-template-columns:1fr; }
+      .about-box { padding:22px; }
+      .cta-box { flex-direction:column; align-items:flex-start; padding:28px; }
+      .footer-right { text-align:left; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand"><div class="logo">KC</div><div><h1>Kiddies Corner School</h1><p>Learn • Play • Grow</p></div></div>
+      <div class="header-actions"><a class="phone" href="tel:+910000000000">☎ +91 00000 00000</a><a class="btn" href="#admissions">Enroll Now</a></div>
+    </div>
+    <nav><ul><li><a href="#home">Home</a></li><li><a href="#about-us">About Us</a></li><li><a href="#programs">Programs</a></li><li><a href="#admissions">Admissions</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+  </header>
+  <main>
+    <section id="home" class="hero"><div class="hero-content"><span class="badge">Admissions Open for 2026</span><h2>Where Little Steps Lead to Big Futures</h2><p>A warm, safe, and joyful learning environment where children grow through creativity, confidence, care, and holistic development.</p><div class="hero-buttons"><a class="btn" href="#contact">Book a School Tour</a><a class="btn btn-ghost" href="#programs">View Programs</a></div></div></section>
+    <section id="about-us"><div class="container"><div class="section-title"><h3>About Kiddies Corner English School</h3><p>Established in 1993, serving students from Grade 1 to Grade 10 with an attached pre-primary section.</p></div>
+      <div class="about-box"><div class="about-text"><p>KIDDIES CORNER ENGLISH SCHOOL was established in 1993 and it is managed by the Pvt. Unaided. It is located in Urban area. It is located in IRILBUNG block of IMPHAL EAST district of Manipur. The school consists of Grades from 1 to 10. The school is Co-educational and it have an attached pre-primary section. English is the medium of instructions in this school. This school is approachable by all weather road. In this school academic session starts in April.</p><p>The school has Private building. It has got 8 classrooms for instructional purposes. All the classrooms are in good condition. It has 2 other rooms for non-teaching activities. The school has a separate room for Head master/Teacher. The school has Pucca boundary wall. The school has electric connection. The source of Drinking Water in the school is Well and it is functional.</p><p>The school has 4 boys toilet and 5 girls toilet and they are functional. The school has a playground. The school has a library and has 7050 books in its library. The school has 10 computers for teaching and learning purposes and all are functional. The school is having a computer aided learning lab.</p></div>
+      <div class="highlight-card"><h4>School Highlights</h4><div class="highlight-grid"><div class="highlight"><strong>1993</strong><span>Established</span></div><div class="highlight"><strong>1–10</strong><span>Grades</span></div><div class="highlight"><strong>8</strong><span>Classrooms</span></div><div class="highlight"><strong>7050</strong><span>Library Books</span></div><div class="highlight"><strong>10</strong><span>Computers</span></div><div class="highlight"><strong>English</strong><span>Medium</span></div></div></div></div>
+      <div class="features"><div class="feature"><div class="icon">🛡️</div><h4>Safe & Secure Environment</h4><p>CCTV-enabled campus, trained staff, child-friendly spaces, and careful supervision.</p></div><div class="feature"><div class="icon">🎨</div><h4>Play-Based Learning</h4><p>A creative curriculum that helps children learn through stories, art, music, and play.</p></div><div class="feature"><div class="icon">🎓</div><h4>Experienced Educators</h4><p>Certified, caring teachers focused on confidence, curiosity, and character.</p></div></div></div></section>
+    <section id="programs" class="programs"><div class="container"><div class="section-title"><h3>Quick View Programs</h3><p>Age-appropriate programs designed for joyful development and school readiness.</p></div><div class="program-grid"><div class="program"><div class="icon">🧸</div><h4>Toddler</h4><p>Gentle routines, sensory play, language building, and social confidence.</p><a href="#contact">Learn More →</a></div><div class="program"><div class="icon">🌈</div><h4>Playgroup</h4><p>Creative play, early numeracy, storytelling, music, movement, and sharing.</p><a href="#contact">Learn More →</a></div><div class="program"><div class="icon">📚</div><h4>Pre-K</h4><p>School readiness through phonics, hands-on activities, art, and discovery.</p><a href="#contact">Learn More →</a></div><div class="program"><div class="icon">⭐</div><h4>Kindergarten</h4><p>A balanced foundation in literacy, math, life skills, and joyful learning.</p><a href="#contact">Learn More →</a></div></div></div></section>
+    <section id="admissions" class="cta"><div class="container"><div class="cta-box"><div><h3>Ready to visit Kiddies Corner School?</h3><p>Schedule a tour and see our classrooms, safety systems, teachers, and learning environment.</p></div><a class="btn btn-blue" href="#contact">Contact Admissions</a></div></div></section>
+  </main>
+  <footer id="contact"><div class="footer-grid"><div><h3>Kiddies Corner School</h3><p>A safe, nurturing, and excellent start for every child.</p></div><div><p>📍 Your School Address, Imphal East, Manipur</p><p>☎ +91 00000 00000</p><p>✉ info@kiddiescorner.edu</p></div><div class="footer-right"><p>© 2026 Kiddies Corner School.</p><p>All rights reserved.</p></div></div></footer>
+</body>
 </html>
